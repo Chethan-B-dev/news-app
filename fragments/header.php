@@ -9,6 +9,9 @@
           <a class="nav-link active" aria-current="page" href="likes.php">My Likes</a>
         </li>
 
+
+        <?php if(!isset($_SESSION['isLoggedIn'])): ?>
+
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="login.php">Login</a>
         </li>
@@ -16,6 +19,18 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="register.php">Register</a>
         </li>
+
+        <?php endif ?>
+
+        <?php if(isset($_SESSION['isLoggedIn'])): ?>
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="logout.php">logout</a>
+        </li>
+
+        <?php endif ?>
+
+
     </ul>
     </div>
   </div>
