@@ -107,7 +107,7 @@ function getMyLikes($conn){
 }
 
 function deleteLike($conn,$likeId){
-    $query    = "DELETE FROM `likes` WHERE `id` = '$likeId';";
+    $query = "DELETE FROM `likes` WHERE `id` = '$likeId';";
     $result = mysqli_query($conn, $query) or die(mysql_error());
     if ($result) {
         return 1;
