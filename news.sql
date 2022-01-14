@@ -15,3 +15,4 @@ describe users;
 --     FOREIGN KEY (user_id) REFERENCES users(id)
 -- );
 
+describe likes;

@@ -1,21 +1,21 @@
 <?php
     include_once("functions.php");
     include_once("config/db.php");
-    $news = getNews();
+
+    if(!isset($_SESSION['isLoggedIn'])){
+        header("Location: login.php");
+    }
+
 
     $error = null;
     $success = null;
+    $news = getMyLikes($conn);
 
-    if(isset($_POST['like'])){
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-        $publishedAt = $_POST['publishedAt'];
-        $image = $_POST['image'];
-        $status = like($title,$description,$publishedAt,$image,$conn);
+    if(isset($_GET['delete'])){
+        $deleteId = $_GET['delete'];
+        $status = deleteLike($conn,$deleteId);
         if ($status == 1){
-            $success = "you liked the post";
-        } else {
-            $error = "You have already liked this news"; 
+            header("Location: likes.php");
         }
     }
 
@@ -43,7 +43,7 @@
 
 
     <h3 class="text-center">
-      Top News Of The Day For 
+      News That I have Liked
       <?php if(isset($_SESSION['isLoggedIn'])): ?>
         <span><?php echo $_SESSION['username']; ?></span>
       <?php endif ?>
@@ -72,18 +72,8 @@
                 <h5 class="card-title"><?php echo $value->get_title(); ?></h5>
                 <p class="card-text"><?php echo $value->get_description(); ?></p>
                 <p class="text-muted"><?php echo $value->get_published_at(); ?></p>
-                <?php if(isset($_SESSION['isLoggedIn'])): ?>
-                  <form method = "POST" action ="index.php">
-                    <input type="hidden" name="title" value = "<?php echo $value->get_title(); ?>">
-                    <input type="hidden" name="description" value = "<?php echo $value->get_description(); ?>">
-                    <input type="hidden" name="publishedAt" value = "<?php echo $value->get_published_at(); ?>">
-                    <input type="hidden" name="image" value = "<?php echo $value->get_image(); ?>">
-                    <input type="submit" name="like" class="btn btn-primary" value="Like"/>
-                  </form>
-                <?php else: ?>
-                  <a href="#" class="btn btn-primary disabled">Like</a>
-                <?php endif ?>
-                
+                <a href="#" class="btn btn-primary disabled">Like</a>
+                <a href="likes.php?delete=<?php echo $value->get_id(); ?>" class="btn btn-danger">Delete</a>
               </div>
             </div>
         <?php endforeach; ?>

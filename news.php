@@ -6,6 +6,7 @@ class News{
     private $description;
     private $publishedAt;
     private $image;
+    private $id = -1;
 
     function __construct($title,$description,$publishedAt,$image) {
         $this->title = $title;
@@ -30,13 +31,20 @@ class News{
         return $this->image;
     }
 
+    function get_id() {
+        return $this->id;
+    }
+
     function set_title($title) {
         $this->title = $title;
     }
 
+    function set_id($id) {
+        $this->id = $id;
+    }
+
     function set_description($description) {
         $this->description = $description;
-        
     }
 
     function set_publishedAt($publishedAt) {
